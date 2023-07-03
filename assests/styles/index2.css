@@ -135,7 +135,7 @@ header > div #popout .popout-body {
 header > div #popout .popout-body .avatar {
   position: absolute;
   top: -60px;
-  left: 0;
+  left: 125px;
   width: 100px;
   height: auto;
   
