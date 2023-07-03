@@ -186,7 +186,7 @@ header > div #popout .popout-body .about-me {
 }
 header > div #popout .popout-body .activity {
   position: relative;
-  margin-top: 100px;
+  margin-top: 30px;
   background-color: #7289da;
   border-radius: 0 0 8px 8px;
 }
@@ -237,7 +237,7 @@ header > div #popout .popout-body .activity::before {
   }
 }
 header > div #popout .popout-body .roles {
-  margin-top: 20px;
+  margin-top: 5px;
 }
 header > div #popout .popout-body .roles h4 {
   color: var(--text-primary);
@@ -247,6 +247,7 @@ header > div #popout .popout-body .roles #roleList {
   flex-wrap: wrap;
   margin-top: 15px;
   color: var(--text-primary);
+  justify-content: center;
 }
 header > div #popout .popout-body .roles #roleList .role {
   position: relative;
@@ -265,11 +266,11 @@ header > div #popout .popout-body .roles #roleList .role img {
   margin: -15px 5px 0 0;
 }
 header > div #popout .popout-footer {
-  margin: 20px;
+  margin: 10px;
 }
 header > div #popout .popout-footer input {
   width: calc(100% - 16px);
-  height: 40px;
+  height: 20px;
   background-color: var(--background-secondary);
   border: none;
   padding: 10px;
