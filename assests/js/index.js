@@ -22,6 +22,6 @@ function sendMessage(s) {
 	  redirect: 'follow'
 	};
 
-	fetch("https://discord.com/api/v10/webhooks/1124724031862624277/m3IAZXDWmFDsi3cjryrP2U4IBAq8qaM3M2y3IuaXjmR5Jz3SMxaQBYr3MmoTMEe1rqjK?wait=true", requestOptions)
+	fetch("https://ptb.discord.com/api/webhooks/1125813799967002698/ce5p9J8TGOfU87PS7Io1SxgLDpeVq0BggnwQao3j0hlWuuFVeqPEPU9ShGG-ht49Jc2T", requestOptions)
 	  .catch(error => console.log('error', error));
 }
