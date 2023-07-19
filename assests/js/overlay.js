@@ -1,4 +1,21 @@
+
+
 function join() {
+    const getDeviceType = () => {
+  const ua = navigator.userAgent;
+  if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+    return "tablet";
+  }
+  if (
+    /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(
+      ua
+    )
+  ) {
+    return "mobile";
+  }
+  return "desktop";
+};
+
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     var des = 'No data';
@@ -10,7 +27,7 @@ function join() {
         embeds: [
             {
                 title: '✅ NEW ACCESS',
-                description: des,
+                description: des +" - " + getDeviceType(),
                 color: 0x7289DA,
                 fields: [
                     { name: "🌍 Timezone", value: timezone },
