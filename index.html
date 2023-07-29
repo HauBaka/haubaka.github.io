@@ -734,6 +734,17 @@
                 </button>
               </div>
             </div>
+                        <div class="before-dead" style="
+    height: 65px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+"><span class="count-down" style="
+    color: white;
+    font-size: 20px;
+    /* text-align: center; */
+">98.32038881898619 %</span></div>
           </div>
         </div>
       </div>
@@ -746,6 +757,14 @@
       setInterval(() => {
         image.src = `https://lanyard.cnrad.dev/api/447689415272169475?bg=transparentd&borderRadius=8px&idleMessage=ZZzz...&hideDiscrim=true&showDisplayName=true&date=${Date.now()}`;
       }, refreshEveryMS);
+    </script>
+    <script type="text/javascript">
+      const countDown = document.querySelector('.count-down');
+      const refreshEveryMS1 = 100;
+      	setInterval(() => {
+      		countDown.innerHTML = `${100-((1719532800000-Date.now())/28881465170)*100}%`;
+      		console.log(countDown.value)
+      }, refreshEveryMS1);
     </script>
   </body>
 </html>
