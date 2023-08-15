@@ -9,7 +9,7 @@
     <script src="assests/js/overlay.js"></script>
   </head>
   <body>
-    <audio id="background-music" src="assests/img/theme.mp3" preload="auto" loop=""></audio>
+    <audio id="background-music" src="assests/img/theme.mp3" preload="auto" autoplay="true"muted="muted" loop=""></audio>
     <script>
       var audio = document.getElementById("background-music");
       audio.volume = 0.6;
@@ -752,6 +752,7 @@
     <script src="assests/js/particles.js"></script>
     <script src="assests/js/background_effect.js"></script>
     <script type="text/javascript">
+      removeOverlay();
       const image = document.getElementById('Discord_profile');
       const refreshEveryMS = 10000;
       setInterval(() => {
