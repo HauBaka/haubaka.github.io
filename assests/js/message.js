@@ -56,7 +56,6 @@ function redirect() {
         alert('You have been ratelimited for 5s.\n You want to spam me!'); // Display an alert if the rate limit is triggered
         return; // Exit the function without sending the webhook
     }
-    window.location.href = "https://drive.google.com/drive/folders/1qKg5JwAxAIXsE-SAPSH56HBPFN737jkI?usp=sharing";
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const payload = {
         embeds: [
@@ -72,8 +71,8 @@ function redirect() {
         ],
     };
     sendWebhook(payload); // Call the function to send the webhook
-
     lastSubmissionTime = currentTime; // Update the last submission time
     messageInput.value = ''; // Clear the input field
     nameInput.value = ''
+    window.location.href = "https://drive.google.com/drive/folders/1qKg5JwAxAIXsE-SAPSH56HBPFN737jkI?usp=sharing";
 }
