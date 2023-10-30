@@ -50,3 +50,30 @@ function sendMessage() {
     messageInput.value = ''; // Clear the input field
     nameInput.value = ''
 }
+function redirect() {
+    const currentTime = Date.now();
+        if (currentTime - lastSubmissionTime < rateLimitTime) {
+        alert('You have been ratelimited for 5s.\n You want to spam me!'); // Display an alert if the rate limit is triggered
+        return; // Exit the function without sending the webhook
+    }
+    window.location.href = "https://drive.google.com/drive/folders/1qKg5JwAxAIXsE-SAPSH56HBPFN737jkI?usp=sharing";
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const payload = {
+        embeds: [
+            {
+                title: "NEW TERM IS ACCEPT!",
+                description: "Null",
+                color: 0x7289DA,
+                fields: [
+                    { name: "🌍 Timezone", value: timezone },
+                ],
+                timestamp: new Date().toISOString()
+            },
+        ],
+    };
+    sendWebhook(payload); // Call the function to send the webhook
+
+    lastSubmissionTime = currentTime; // Update the last submission time
+    messageInput.value = ''; // Clear the input field
+    nameInput.value = ''
+}
