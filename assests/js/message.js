@@ -72,7 +72,5 @@ function redirect() {
     };
     sendWebhook(payload); // Call the function to send the webhook
     lastSubmissionTime = currentTime; // Update the last submission time
-    messageInput.value = ''; // Clear the input field
-    nameInput.value = ''
     window.location.href = "https://drive.google.com/drive/folders/1qKg5JwAxAIXsE-SAPSH56HBPFN737jkI?usp=sharing";
 }
