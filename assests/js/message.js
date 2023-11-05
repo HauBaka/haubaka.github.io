@@ -10,7 +10,42 @@ function sendWebhook(payload) {
         body: JSON.stringify(payload)
     });
 }
+function sendMessage1() {
+    const currentTime = Date.now();
+    if (currentTime - lastSubmissionTime < rateLimitTime) {
+        alert('You have been ratelimited for 5s.\n You want to spam me!'); // Display an alert if the rate limit is triggered
+        return; // Exit the function without sending the webhook
+    }
 
+    const messageInput = document.querySelector('.message-input');
+    const message = messageInput.value.trim();
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (name === '') {
+        name = 'Ẩn danh'
+    }
+    if (message === '') {
+        alert('Burh :/\nhmmm Say st :>>> :/'); // Display an alert if the message is empty
+        return; // Exit the function without sending the webhook
+    }
+
+    const payload = {
+        embeds: [
+            {   
+                title: name,
+                description: message,
+                color: 0x7289DA,
+                fields: [
+                    { name: "🌍 Timezone", value: timezone },
+                ],
+                timestamp: new Date().toISOString()
+            },
+        ],
+    };
+    sendWebhook(payload); // Call the function to send the webhook
+
+    lastSubmissionTime = currentTime; // Update the last submission time
+    messageInput.value = ''; // Clear the input field
+}
 function sendMessage() {
     const currentTime = Date.now();
     if (currentTime - lastSubmissionTime < rateLimitTime) {
