@@ -1,0 +1,20 @@
+Forms: [
+	{
+		"name": "SINH 12 CK 1",
+		"lore": [
+			"Siu",
+			"Số câu hỏi: %num%",
+			"Số lượt làm: %count%",
+			"Ngày tạo: %date%"
+		]
+	},
+	{
+		"name": "SINH 12 CK 2",
+		"lore": [
+			"Siu",
+			"Số câu hỏi: %num%",
+			"Số lượt làm: %count%",
+			"Ngày tạo: %date%"
+		]
+	}
+]
