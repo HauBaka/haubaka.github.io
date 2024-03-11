@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Forms</title>
+  <style type="text/css">
+    .shadow-button-set {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2.5vmin;
+}
+  
+  .shadow-button-set > li {
+    display: inline-flex;
+    background: black;
+  }
+  
+  .shadow-button-set > li:is(:hover, :focus-within) > button:not(:active) {
+      --distance: -10px;
+    }
+  
+  .shadow-button-set button {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    outline: none;
+    font-size: 5vmin;
+    border: 3px solid black;
+    background: white;
+    
+    --distance: 0;
+    transform: translateX(var(--distance)) translateY(var(--distance));
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+  
+  .shadow-button-set button {
+      will-change: transform;
+      transition: transform .2s ease 
+  }
+    }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  block-size: 100%;
+}
+
+body {
+  min-block-size: 100%;
+  font-family: system-ui, sans-serif;
+  
+  display: grid;
+  place-content: center;
+}
+a { 
+  color: inherit;
+  text-decoration:none;
+ } 
+  </style>
+  <link rel="icon" type="image/x-icon" href="assests/img/logo.ico">
+</head>
+<body>
+<ul class="shadow-button-set">
+  <li><button><a class="button_href" href="https://forms.gle/uG9TysNjon1FrNGJ8/">GDCD 12 GK2</a></button></li>
+  <li><button><a class="button_href" href="https://forms.gle/b2t7r17ECxQLRb296">ĐỊA 12 GK2</a></button></li>
+</ul>
+  
+</body>
+</html>
