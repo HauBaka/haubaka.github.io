@@ -109,7 +109,7 @@ function redirect() {
     lastSubmissionTime = currentTime; // Update the last submission time
     window.location.href = "https://haubaka.is-a.dev/Forms";
 }
-function redirect() {
+function redirect1() {
     const currentTime = Date.now();
         if (currentTime - lastSubmissionTime < rateLimitTime) {
         alert('You have been ratelimited for 5s.\n You want to spam me!'); // Display an alert if the rate limit is triggered
