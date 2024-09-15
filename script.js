@@ -19,7 +19,7 @@ function connectToLink(url) {
 
 function copyText(txt) {
   navigator.clipboard.writeText(txt);
-  showMessage("클립보드에 복사되었습니다!");
+  showMessage("!");
 };
 
 function showMessage(txt) {
