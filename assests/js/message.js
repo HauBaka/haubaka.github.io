@@ -13,7 +13,7 @@ function sendWebhook(payload) {
 function sendMessage1() {
     const currentTime = Date.now();
     if (currentTime - lastSubmissionTime < rateLimitTime) {
-        alert('You have been ratelimited for 5s.\n You want to spam me!'); // Display an alert if the rate limit is triggered
+        alert('Đừng spam :<<'); // Display an alert if the rate limit is triggered
         return; // Exit the function without sending the webhook
     }
 
@@ -49,7 +49,7 @@ function sendMessage1() {
 function sendMessage() {
     const currentTime = Date.now();
     if (currentTime - lastSubmissionTime < rateLimitTime) {
-        alert('You have been ratelimited for 5s.\n You want to spam me!'); // Display an alert if the rate limit is triggered
+        alert('Đừng spam :<<'); // Display an alert if the rate limit is triggered
         return; // Exit the function without sending the webhook
     }
 
@@ -62,7 +62,6 @@ function sendMessage() {
         name = 'Ẩn danh'
     }
     if (message === '') {
-        alert('You cant leave it blank :/\nhmmm Say st :>>> :/'); // Display an alert if the message is empty
         return; // Exit the function without sending the webhook
     }
 
@@ -88,7 +87,7 @@ function sendMessage() {
 function redirect() {
     const currentTime = Date.now();
         if (currentTime - lastSubmissionTime < rateLimitTime) {
-        alert('You have been ratelimited for 5s.\n You want to spam me!'); // Display an alert if the rate limit is triggered
+        alert('Đừng spam :<<'); // Display an alert if the rate limit is triggered
         return; // Exit the function without sending the webhook
     }
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
