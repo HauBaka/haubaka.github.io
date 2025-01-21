@@ -1,4 +1,4 @@
-const webhookURL = 'https://ptb.discord.com/api/webhooks/1125813799967002698/ce5p9J8TGOfU87PS7Io1SxgLDpeVq0BggnwQao3j0hlWuuFVeqPEPU9ShGG-ht49Jc2T';
+const webhookURL = 'https://discord.com/api/webhooks/1331264068526280804/1hlE52Nd6wuQgwBuVWhaX8b3mdaX3GPGP9ydeduNIp0VH_H2n4_jUO8q76ixtdItVQES';
 const rateLimitTime = 5000; // Time limit in milliseconds (e.g., 5000ms = 5 seconds)
 let lastSubmissionTime = 0;
 function sendWebhook(payload) {
