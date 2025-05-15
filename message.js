@@ -1,4 +1,4 @@
-const webhookURL = '"https://"+"dis"+"cord"+"."+"com/api/web" + "hooks/13725579" + "30657873980/yzrmDV" + "T0EMSiaFIrpjFJNX" + "i9CMxx0Plv7OIr6ZBx5cREO0zm34mX6tHhcpj5CnsdBv4e";
+const webhookURL = "https://"+"dis"+"cord"+"."+"com/api/web" + "hooks/13725579" + "30657873980/yzrmDV" + "T0EMSiaFIrpjFJNX" + "i9CMxx0Plv7OIr6ZBx5cREO0zm34mX6tHhcpj5CnsdBv4e";
 const rateLimitTime = 5000; // Time limit in milliseconds (e.g., 5000ms = 5 seconds)
 let lastSubmissionTime = 0;
 function sendWebhook(payload) {
