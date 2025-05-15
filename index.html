@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
   </head>
   <script src="script.js"></script>
+  <script src="message.js"></script>
   <style>
     body {
       background-image: url(bg.jpg);
@@ -34,17 +35,43 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 50px;
-      flex-wrap: wrap
+      flex-direction: column;
+      gap: 5px;
+      flex-wrap: no-wrap
     }
 
-    .contents {
-      width: 340px;
+    .header {
+      width: 50%;
       height: fit-content;
       position: relative;
       display: flex;
       align-items: center;
+      animation: .4s linear 0s 1 unbluring
+    }
+
+    .timer {
+      width: 35%;
+      height: 80%;
+      position: relative;
+      display: flex;
       flex-direction: column;
+      align-items: center;
+      font-size: 28px;
+      justify-content: center;
+      margin-right: 20px;
+      animation: .4s linear 0s 1 unbluring;
+    }
+
+    .contents {
+      width: 24%;
+      padding-bottom: 10px;
+      height: fit-content;
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      justify-content: center;
+      flex-wrap: wrap;
       animation: .4s linear 0s 1 unbluring
     }
 
@@ -75,12 +102,21 @@
     }
 
     .ui {
-      box-shadow: 0 0 32px -6px rgb(0 0 0);
-      border: solid 1px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
       border-color: rgb(255 255 255 / 58%);
       backdrop-filter: blur(12px);
-      background-color: rgb(0 0 0 / 20%);
-      border-radius: 10px
+      background-color: rgb(0 0 0 / 8%);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(15px);
+    }
+
+    .ui-2 {
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+      border-color: rgb(255 255 255 / 58%);
+      background-color: rgb(0 0 0 / 2%);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .title {
@@ -108,21 +144,11 @@
     }
 
     .avatar-img {
-      width: 125px;
-      height: 125px;
+      width: 100px;
+      height: 100px;
       margin: 10px 0 15px 0;
       border-radius: 100%;
       box-shadow: 0 0 32px -6px rgb(0 0 0)
-    }
-
-    .discord-status {
-      width: 18px;
-      height: 18px;
-      box-shadow: 0 0 32px -6px rgb(0 0 0);
-      position: absolute;
-      margin: 16px 16px 16px 16px;
-      opacity: .9;
-      border-radius: 100%
     }
 
     div {
@@ -132,9 +158,9 @@
 
     .links {
       width: 100%;
-      background-color: rgb(0 0 0 / 30%);
+      background-color: rgb(0 0 0 / 8%);
       border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px
+      border-bottom-right-radius: 10px;
     }
 
     .link-btn {
@@ -153,7 +179,6 @@
       line-height: 45px;
       position: relative;
       text-decoration: none;
-      text-transform: uppercase;
       margin: 5px 5px 5px 5px
     }
 
@@ -168,12 +193,12 @@
       outline-color: rgba(255, 255, 255, .5);
       outline-offset: 0;
       text-shadow: none;
-      transition: all 1.25s cubic-bezier(.19, 1, .22, 1)
+      transition: all 0.5s cubic-bezier(.19, 1, .22, 1)
     }
 
     .btn-5:hover {
       border: 1px solid;
-      box-shadow: inset 0 0 20px rgba(255, 255, 255, .5), 0 0 20px rgba(255, 255, 255, .2);
+      box-shadow: inset 0 0 20px rgba(255, 255, 255, .1), 0 0 20px rgba(255, 255, 255, .1);
       outline-color: rgba(255, 255, 255, 0);
       outline-offset: 15px;
       text-shadow: 1px 1px 2px #427388
@@ -346,6 +371,135 @@
         opacity: none
       }
     }
+
+    .lore {
+      position: absolute;
+    }
+
+    .sf-indicator {
+      --sf-indicator-size: 16px;
+      --sf-indicator-green: #0bbf0b;
+      --sf-indicator-red: #c51b1b;
+      --sf-indicator-orange: #db8719;
+    }
+
+    .sf-indicator {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 0 32px -6px rgb(0 0 0);
+      position: absolute;
+      margin: 16px 16px 16px 16px;
+    }
+
+    .sf-indicator .status-dot {
+      width: var(--sf-indicator-size);
+      height: var(--sf-indicator-size);
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .sf-indicator .status-dot::before,
+    .sf-indicator .status-dot::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: sf-indicator-pulse 2s infinite linear;
+      opacity: 0.3;
+    }
+
+    .sf-indicator .status-dot::after {
+      animation-delay: 1.25s;
+    }
+
+    @keyframes sf-indicator-pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translate(-50%, -50%) scale(2.5);
+        opacity: 0;
+      }
+    }
+
+    .status {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .music-progress-bar {
+      width: 80%;
+      height: 6px;
+      background-color: #444;
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #1db954, #1ed760);
+      transition: width 0.3s ease;
+    }
+
+    .activity {
+      width: 90%;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      height: fit-content;
+      padding-top: 10px;
+      margin-top: 10px;
+      height: fit-content;
+    }
+
+    .dob {
+      width: fit-content;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      height: fit-content;
+      margin-top: 10px;
+      height: fit-content;
+    }
+
+    .break {
+      height: 0.1px;
+      width: 40%;
+      background: #fff;
+      opacity: 0.7;
+    }
+
+    textarea::placeholder {
+      color: white;
+      opacity: 1;
+    }
+
+    textarea {
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0);
+      /* bóng nhẹ */
+    }
+
+    textarea:focus {
+      transform: scale(0.98);
+      /* hiệu ứng nhấn nhẹ */
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0);
+      /* ánh sáng khi focus */
+      outline: none;
+    }
   </style>
   <body>
     <div class="message-comeout">
@@ -364,40 +518,130 @@
       <div class="bubble"></div>
       <div class="bubble"></div>
     </div>
-    <div class="contents ui">
-      <div class="avatar-holder">
+    <div class="header ui">
+      <div class="avatar-holder" style="margin-left: 10px;">
         <img class="avatar-img" alt="PlaceHolder">
-        <div class="discord-status" style="background-color:#fff"></div>
+        <p class="sf-indicator " style="background-color:transparent;">
+          <span class="status-dot"></span>
+        </p>
       </div>
-      <div class="bold centerText" style="font-size:40px;height:25px;text-shadow:0 0 7px #000"></div>
-      <div class="owner-name bold centerText" style="font-size:40px;height:25px;text-shadow:0 0 7px #000"></div>
-      <div class="description" style="width:95%;font-size:23px;margin-top:10px;text-align:center">
-        <b>Xin tiền mua skin dao</b>
-        <br>
-        <i>Asia (VietNam, GMT+7)</i>
-        <br>≿━━━━༺❀༻━━━≾ <br>
-        <a href="https://discord.com/users/447689415272169475" target="_blank">
-          <img src="https://lanyard.cnrad.dev/api/447689415272169475?bg=transparentd&borderRadius=8px&idleMessage=I╲⟍⎝╲༼◕ ◕ ༽╱⎠⟋╱I.&hideDiscrim=true&date=1712852651123&hideProfile=true" id="Discord_profile" style="width:90%;margin-bottom:10px">
+      <div class="information" style="width:95%;font-size:23px;margin-top:5px;text-align:left;margin-left: 10px;">
+        <a href="https://discord.com/users/447689415272169475" target="_blank" style="text-decoration: none; color: #fff; font-size: 36px;">
+          <b class="owner-name"></b>
         </a>
-        <br>
-        <i>Have a Good Day !</i>
-        <br>≿━━━━༺❀༻━━━≾
+        </br>
+        <i>🥭</i>
       </div>
-      <div class="links">
-        <div class="centerText row" style="width:100%;height:40px;margin:0">
-          <div class="btn btn-5 centerText col" style="height:30px;color:#fff" onclick='connectToLink("https://open.spotify.com/user/31ltl6sh7ncfejb222ha4sbwxxjq")'>Spotify</div>
-          <div class="btn btn-5 centerText col" style="height:30px;color:#fff" onclick='connectToLink("https://www.facebook.com/abcdefghiklmnopqrstuvxyz1234567890/")'>Facebook</div>
-          <div class="btn btn-5 centerText col" style="height:30px;color:#fff" onclick='connectToLink("https://discord.com/users/447689415272169475")'>Discord</div>
+      <div class="alya-dance">
+        <img src="./alyadance.gif" style="height:90%; width: 90%;"></img>
+      </div>
+      <div class="timer ui-2">
+        <span class="clock"></span>
+        <span class="weather"></span>
+      </div>
+    </div>
+    <div class="content" style="    display: flex
+;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;">
+      <div class="contents ui">
+        <div class="bold" style="font-size:40px;height:25px;text-shadow:0 0 7px #000; text-align: left; width: 100%; padding-left: 20px; margin-bottom: 10px;">Overview</div>
+        <div class=" contents ui-2 activity">
+          <div class="logo" style="margin-left: 10px;"></div>
+          <div class="status" style="margin-left: 10px; margin-right: 10px; ">
+            <div class="lore-1" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; height: fit-content; font-size: 20px;"></div>
+            <div class="lore-2" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;  height: 25%;font-size: 18px;"></div>
+            <div class="lore-3" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; height: 25%;font-size: 16px;"></div>
+            <div class="lore-4" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; height: 25%;font-size: 14px; "></div>
+          </div>
+        </div>
+        <div class="btn btn-5 centerText" style="height:40px;color:#fff">
+          <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 15.9248C3 13.5162 3.51623 13 5.9248 13H18.0752C20.4838 13 21 13.5162 21 15.9248V18.0752C21 20.4838 20.4838 21 18.0752 21H5.9248C3.51623 21 3 20.4838 3 18.0752V15.9248Z" stroke="#fff" stroke-width="2" />
+            <path d="M6 13V11.656C6 9.46878 6.46878 9 8.656 9H15.344C17.5312 9 18 9.46878 18 11.656V13" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+            <path d="M9 9V7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9 3.5V3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M15 9V7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M15 3.5V3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 9V7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M12 3.5V3" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M3 16.0397C3.30926 16.0122 3.63847 16 4 16C5.61017 16 6.38983 17 8 17C9.61017 17 10.3898 16 12 16C13.6102 16 14.3898 17 16 17C17.6102 17 18.3898 16 20 16C20.3615 16 20.6907 16.0122 21 16.0397" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; height: fit-content; font-size: 18px; margin-left: 8px; align-items: center; justify-content: center; text-align: center;"> 18, Aug 2006 </span>
+        </div>
+        <div class="btn btn-5 centerText" style="height:40px;color:#fff" onclick='connectToLink("https://open.spotify.com/user/31ltl6sh7ncfejb222ha4sbwxxjq")'>
+          <svg width="24px" height="24px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+              <g id="Color-" transform="translate(-200.000000, -460.000000)" fill="#00DA5A">
+                <path d="M238.16,481.36 C230.48,476.8 217.64,476.32 210.32,478.6 C209.12,478.96 207.92,478.24 207.56,477.16 C207.2,475.96 207.92,474.76 209,474.4 C217.52,471.88 231.56,472.36 240.44,477.64 C241.52,478.24 241.88,479.68 241.28,480.76 C240.68,481.6 239.24,481.96 238.16,481.36 M237.92,488.08 C237.32,488.92 236.24,489.28 235.4,488.68 C228.92,484.72 219.08,483.52 211.52,485.92 C210.56,486.16 209.48,485.68 209.24,484.72 C209,483.76 209.48,482.68 210.44,482.44 C219.2,479.8 230,481.12 237.44,485.68 C238.16,486.04 238.52,487.24 237.92,488.08 M235.04,494.68 C234.56,495.4 233.72,495.64 233,495.16 C227.36,491.68 220.28,490.96 211.88,492.88 C211.04,493.12 210.32,492.52 210.08,491.8 C209.84,490.96 210.44,490.24 211.16,490 C220.28,487.96 228.2,488.8 234.44,492.64 C235.28,493 235.4,493.96 235.04,494.68 M224,460 C210.8,460 200,470.8 200,484 C200,497.2 210.8,508 224,508 C237.2,508 248,497.2 248,484 C248,470.8 237.32,460 224,460" id="Spotify"></path>
+              </g>
+            </g>
+          </svg>
+          <span style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; height: fit-content; font-size: 18px; margin-left: 8px;">Hậ </span>
+        </div>
+        <div class="btn btn-5 centerText" style="height:40px;color:#fff" style="line-height: 1;" onclick='connectToLink("https://www.facebook.com/abcdefghiklmnopqrstuvxyz1234567890/")'>
+          <svg width="24px" height="24px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="none">
+            <path fill="#1877F2" d="M15 8a7 7 0 00-7-7 7 7 0 00-1.094 13.915v-4.892H5.13V8h1.777V6.458c0-1.754 1.045-2.724 2.644-2.724.766 0 1.567.137 1.567.137v1.723h-.883c-.87 0-1.14.54-1.14 1.093V8h1.941l-.31 2.023H9.094v4.892A7.001 7.001 0 0015 8z" />
+            <path fill="#ffffff" d="M10.725 10.023L11.035 8H9.094V6.687c0-.553.27-1.093 1.14-1.093h.883V3.87s-.801-.137-1.567-.137c-1.6 0-2.644.97-2.644 2.724V8H5.13v2.023h1.777v4.892a7.037 7.037 0 002.188 0v-4.892h1.63z" />
+          </svg>
+          <span style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; height: fit-content; font-size: 18px; margin-left: 8px;">Hậu </span>
+        </div>
+        <div class="btn btn-5 centerText" style="height:40px;color:#fff" style="line-height: 1;" onclick='connectToLink("https://discord.com/users/447689415272169475")'>
+          <svg width="24px" height="24px" viewBox="0 -28.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+            <g>
+              <path d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z" fill="#5865F2" fill-rule="nonzero"></path>
+            </g>
+          </svg>
+          <span style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; height: fit-content; font-size: 18px; margin-left: 8px;">hau </span>
+        </div>
+      </div>
+      <div class="contents ui" style="
+  display: flex;
+  align-items: flex-end;
+  height: fit-content;
+  flex-direction: row;
+  gap: 10px;
+  position: relative;
+  max-width: 600px;
+">
+        <div style="position: relative; width: 100%;">
+          <textarea class="message-input" placeholder="Để lại lời nhắn..." autocomplete="off" style="
+      width: 100%;
+      height: fit-content;
+      min-height: 160px;
+      background-color: rgba(0, 0, 0, 0);
+      border-radius: 8px;
+      border: none;
+      color: #fff;
+      padding: 12px 60px 12px 12px; 
+      font-size: 24px;
+      resize: none;
+      outline: none;
+      box-sizing: border-box;
+    "></textarea>
+          <!-- Nút SEND nằm bên trong textarea -->
+          <button class="btn-5" onclick="sendMessage()" style="
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      height: 40px;
+      width: 60px;
+      background-color: rgba(0, 0, 0, 0.05);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      transition: background-color 0.3s;
+    ">SEND</button>
         </div>
       </div>
     </div>
-    <div class="break"></div>
   </body>
-  <script type="text/javascript">
-    const image = document.getElementById('Discord_profile');
-    const refreshEveryMS = 1000;
-    setInterval(() => {
-      image.src = `https://lanyard.cnrad.dev/api/447689415272169475?bg=transparentd&borderRadius=8px&idleMessage=I╲⟍⎝╲༼◕ ◕ ༽╱⎠⟋╱I.&hideDiscrim=true&date=1712852651123&hideProfile=true&date=${Date.now()}`;
-    }, refreshEveryMS);
-  </script>
 </html>
