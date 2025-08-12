@@ -41,15 +41,30 @@ async function getSpotifyTrackImage(trackId, accessToken) {
 }
 
 function updateWeather(cityName) {
-  const API_KEY = "d4421fae8cf9703a02992dc4e5e0a97d"; 
-  const url = `https://api.openweathermap.org/data/3.0/weather?q=${cityName},VN&appid=${API_KEY}&units=metric`;
+  const API_KEY = "d4421fae8cf9703a02992dc4e5e0a97d";
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},VN&appid=${API_KEY}&units=metric`;
 
-  $.getJSON(url, function(res) {
-    const weather = res.weather[0].main;
-    const temp = Math.round(res.main.temp);
-    $(".weather").text(`${weather} • ${temp}°C`);
-  });
+  $.getJSON(url)
+    .done(function(res) {
+      const weather = res.weather[0].main;
+      const temp = Math.round(res.main.temp);
+      $(".weather").text(`${weather} • ${temp}°C`);
+    })
+    .fail(function(err) {
+      console.error("Weather API error:", err);
+      $(".weather").text("Weather data unavailable");
+    });
 }
+function update() {
+  updateWeather("Thu Duc");
+  $(".clock").text(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
+}
+
+setTimeout(() => {
+  update(); 
+  setInterval(update, 300000);
+}, 3000);
+
 function formatElapsedTime(startTimestamp) {
   const now = Date.now();
   const elapsed = Math.max(0, now - startTimestamp);
@@ -72,59 +87,72 @@ function clearLores() {
   $(".lore-1, .lore-2, .lore-3, .logo").html("");
 }
 
-function updateDiscordInfo() {
-  $.ajax({
-    url: "https://api.lanyard.rest/v1/users/" + OwnerId,
-    type: "GET",
-    success: function (res) {
-      const data = res.data;
-      const user = data.discord_user;
-      const avatar = `https://cdn.discordapp.com/avatars/${OwnerId}/${user.avatar}.png?size=2048`;
-      $(".avatar-img").attr("src", avatar);
-      $(".status-dot").attr("class", "status-dot " + data.discord_status);
-      $(".owner-name").text("(" + user.username + ")");
-      $(".clock").text(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
 
-      if (data.spotify) {
-        const act = data.spotify;
-        $(".lore-1").html(`<p style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; margin: 0">${act.song}</p>`);
-        $(".lore-2").text(act.artist);
-        $(".lore-3").html(`
-          <div class="music-progress-bar" style="margin: 0 0 5px 0">
-            <div class="progress-fill"></div>
-          </div>
-        `);
-        $(".logo").html(`<img src="${act.album_art_url}" width="64" height="64" style="border-radius: 8%; margin: 5px 0" alt="Song art" />`);
-        updateProgressBar(act.timestamps.start, act.timestamps.end);
-      } else {
-        clearLores();
-        const act = data.activities.find(a => a.type === 0);
-        if (act) {
-          $(".lore-1").html(`<p style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; margin: 0">${act.name}</p>`);
-          $(".lore-2").html(`<p style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; margin: 0">${act.details}</p>`);
-                  $(".lore-3").html(`
-          <div style="font-size: 16px; color: #aaa;">⏱ ${formatElapsedTime(act.timestamps.start)}</div>
-        `);
-          if (act.assets && act.assets.large_image) {
-            const imgKey = act.assets.large_image;
-            const isExternal = imgKey.startsWith("mp:external");
-            const imageUrl = isExternal
-              ? `https://media.discordapp.net/${imgKey.replace("mp:", "")}`
-              : `https://cdn.discordapp.com/app-assets/${act.application_id}/${imgKey}.png`;
-            $(".logo").html(`<img src="${imageUrl}" width="64" height="64" style="border-radius: 8%; margin: 5px 0" alt="Activity art" />`);
-          }
-        } else {
-          clearLores();
-          $(".lore-1").html(`<p style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; margin: 0">Vô triing</p>`);
-            $(".logo").html(`<img src="./alyaafk.gif" width="128" height="64" style="border-radius: 8%; margin: 5px 0" alt="Activity art" />`);
-        }
-      }
-    },
-    error: function (err) {
-      console.error("Failed to fetch Discord info:", err);
+const socket = new WebSocket("wss://api.lanyard.rest/socket");
+
+socket.onopen = () => {
+  socket.send(JSON.stringify({
+    op: 2,
+    d: {
+      subscribe_to_id: OwnerId
     }
-  });
+  }));
+};
+
+socket.onmessage = (event) => {
+  const message = JSON.parse(event.data);
+
+  if (message.t === "INIT_STATE" || message.t === "PRESENCE_UPDATE") {
+    const data = message.d;
+    // update UI như updateDiscordInfo, dùng data này nhé
+    updateDiscordUI(data);
+  }
+};
+
+function updateDiscordUI(data) {
+  const user = data.discord_user;
+  const avatar = `https://cdn.discordapp.com/avatars/${OwnerId}/${user.avatar}.png?size=2048`;
+  $(".avatar-img").attr("src", avatar);
+  $(".status-dot").attr("class", "status-dot " + data.discord_status);
+  $(".owner-name").text("(" + user.username + ")");
+  $(".clock").text(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
+
+  if (data.spotify) {
+    const act = data.spotify;
+    $(".lore-1").html(`<p style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; margin: 0">${act.song}</p>`);
+    $(".lore-2").text(act.artist);
+    $(".lore-3").html(`
+      <div class="music-progress-bar" style="margin: 0 0 5px 0">
+        <div class="progress-fill"></div>
+      </div>
+    `);
+    $(".logo").html(`<img src="${act.album_art_url}" width="64" height="64" style="border-radius: 8%; margin: 5px 0" alt="Song art" />`);
+    updateProgressBar(act.timestamps.start, act.timestamps.end);
+  } else {
+    clearLores();
+    const act = data.activities.find(a => a.type === 0);
+    if (act) {
+      $(".lore-1").html(`<p style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; margin: 0">${act.name}</p>`);
+      $(".lore-2").html(`<p style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; margin: 0">${act.details}</p>`);
+      $(".lore-3").html(`
+        <div style="font-size: 16px; color: #aaa;">⏱ ${formatElapsedTime(act.timestamps.start)}</div>
+      `);
+      if (act.assets && act.assets.large_image) {
+        const imgKey = act.assets.large_image;
+        const isExternal = imgKey.startsWith("mp:external");
+        const imageUrl = isExternal
+          ? `https://media.discordapp.net/${imgKey.replace("mp:", "")}`
+          : `https://cdn.discordapp.com/app-assets/${act.application_id}/${imgKey}.png`;
+        $(".logo").html(`<img src="${imageUrl}" width="64" height="64" style="border-radius: 8%; margin: 5px 0" alt="Activity art" />`);
+      }
+    } else {
+      clearLores();
+      $(".lore-1").html(`<p style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap; margin: 0">Vô triing</p>`);
+      $(".logo").html(`<img src="./alyaafk.gif" width="128" height="64" style="border-radius: 8%; margin: 5px 0" alt="Activity art" />`);
+    }
+  }
 }
+
 
 
 function updateProgressBar(startTimestamp, endTimestamp) {
@@ -143,14 +171,7 @@ function updateProgressBar(startTimestamp, endTimestamp) {
 }
 
 
-updateDiscordInfo();
-function update() {
-  updateWeather("Thu Duc");
-  updateDiscordInfo();
-  //getToken();
-  //getSpotifyTrackImage(0,0);
-}
-setInterval(update, 1000);
+
 
 
 function connectToLink(url) {
